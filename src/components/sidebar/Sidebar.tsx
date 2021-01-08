@@ -24,7 +24,6 @@ const Sidebar = () => {
             background: "#f0f0f0"
           }}
         >
-
           <ul style={{ listStyleType: "none", padding: 0 }}>
             {routes.map(route => (
               <li key={route.path}>
@@ -48,8 +47,6 @@ const Sidebar = () => {
         <div style={{ flex: 1, padding: "10px" }}>
           <Switch>
             {routes.map((route, index) => (
-              // Render more <Route>s with the same paths as
-              // above, but different components this time.
               <RouteComponent
                 key={index}
                 path={route.path}

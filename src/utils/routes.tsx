@@ -1,5 +1,6 @@
 import { JsxElement } from "typescript";
 import React from 'react';
+import Login from "../pages/Login";
 
 type Route = {
   path: string,
@@ -27,4 +28,10 @@ export const authenticated: Route[] = [
   }
 ];
 
-export const unauthenticated: Route[] = [];
+export const unauthenticated: Route[] = [
+  {
+    path: "/login",
+    sidebar: () => <div>login</div>,
+    main: () => <Login />
+  }
+];
