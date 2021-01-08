@@ -7,9 +7,6 @@ import {
   Route,
 } from "react-router-dom";
 
-import { PrivateRoute } from './components/auth/auth';
-import Unauthenticated from './pages/Unauthenticated';
-import Authenticated from './pages/Authenticated';
 import Sidebar from './components/sidebar/Sidebar';
 
 function App() {

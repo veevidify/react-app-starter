@@ -31,3 +31,4 @@ debug.log
 .cache
 
 .lighthouseci
+.eslintcache
