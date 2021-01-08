@@ -17,7 +17,17 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env
+.swp
+.swo
+.sw*
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.npmrc
+debug.log
+
+.cache
+
+.lighthouseci
