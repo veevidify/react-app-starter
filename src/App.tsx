@@ -10,8 +10,9 @@ import {
 
 import { ProvideAuth, PrivateRoute } from './components/auth/auth';
 import Login, { AuthButton } from './pages/Login';
-import Public from './pages/Public';
-import Protected from './pages/Protected';
+import Unauthenticated from './pages/Unauthenticated';
+import Authenticated from './pages/Authenticated';
+import Sidebar from './components/sidebar/Sidebar';
 
 function App() {
   return (
@@ -21,25 +22,17 @@ function App() {
           <Router>
             <div>
               <AuthButton />
-
-              <ul>
-                <li>
-                  <Link to="/public">Public Page</Link>
-                </li>
-                <li>
-                  <Link to="/protected">Protected Page</Link>
-                </li>
-              </ul>
+              <Sidebar />
 
               <Switch>
                 <Route path="/public">
-                  <Public />
+                  <Unauthenticated />
                 </Route>
                 <Route path="/login">
                   <Login />
                 </Route>
                 <PrivateRoute path="/protected">
-                  <Protected />
+                  <Authenticated />
                 </PrivateRoute>
               </Switch>
             </div>
