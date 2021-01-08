@@ -4,13 +4,12 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { authenticated, unauthenticated } from "../../utils/routes";
+import { useState } from "../../overmind";
+import { authenticated, IRoute, unauthenticated } from "../../utils/routes";
 import { PrivateRoute } from "../auth/auth";
-import { useAuth } from "../auth/hooks";
 
 const Sidebar = () => {
-  const auth = useAuth();
-
+  const { auth } = useState();
   const routes = auth.user ? authenticated : unauthenticated;
   const RouteComponent = auth.user ? PrivateRoute : Route;
 

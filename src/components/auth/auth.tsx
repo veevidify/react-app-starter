@@ -1,18 +1,10 @@
 import React from 'react';
-import { useProvideAuth, authContext, useAuth } from './hooks';
 import { Route, Redirect, RouteProps  } from "react-router-dom";
-
-export const ProvideAuth: React.FC = ({ children }) => {
-  const auth = useProvideAuth();
-  return (
-    <authContext.Provider value={auth}>
-      {children}
-    </authContext.Provider>
-  );
-};
+import { useState } from '../../overmind';
 
 export const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
-  let auth = useAuth();
+  const { auth } = useState();
+
   return (
     <Route
       {...rest}

@@ -1,15 +1,14 @@
-import { JsxElement } from "typescript";
 import React from 'react';
 import Login from "../pages/Login";
 
-type Route = {
+export interface IRoute {
   path: string,
   exact?: boolean,
   sidebar: () => JSX.Element,
   main: () => JSX.Element,
 }
 
-export const authenticated: Route[] = [
+export const authenticated: IRoute[] = [
   {
     path: "/",
     exact: true,
@@ -28,7 +27,7 @@ export const authenticated: Route[] = [
   }
 ];
 
-export const unauthenticated: Route[] = [
+export const unauthenticated: IRoute[] = [
   {
     path: "/login",
     sidebar: () => <div>login</div>,
