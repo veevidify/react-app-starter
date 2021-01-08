@@ -10,6 +10,7 @@ export const login: AsyncAction<ILoginReq> = async (
   { state, effects, actions },
   { username, password }
 ) => {
+  console.log("=> overmind login")
   try {
     const loginRequest = await effects.auth.api.login(username, password);
     const { payload } = loginRequest;
@@ -28,6 +29,7 @@ export const login: AsyncAction<ILoginReq> = async (
 }
 
 export const logout: AsyncAction = async ({ state, effects, actions }) => {
+  console.log("=> overmind logout")
   try {
     const logoutRequest = await effects.auth.api.logout();
     if (logoutRequest === true)
@@ -40,11 +42,15 @@ export const persistAuth: Action<{
   user: User,
   expiry: string,
 }> = ({ state, effects, actions }, { user, expiry }) => {
+  console.log("=> overmind authed")
   state.auth.user = user;
   state.auth.authExpiry = new Date(Date.parse(expiry));
   state.auth.token = "tok3n";
 }
 
 export const deAuth: Action = ({ state, effects, actions }) => {
-  state.auth = initState;
+  console.log("=> overmind deauthed")
+  state.auth.user = null;
+  state.auth.authExpiry = new Date();
+  state.auth.token = "";
 }

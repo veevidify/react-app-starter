@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Redirect, RouteProps  } from "react-router-dom";
-import { useState } from '../../overmind';
+import { useActions, useStore } from '../../overmind';
 
 export const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
-  const { auth } = useState();
+  const { auth } = useStore();
 
   return (
     <Route
@@ -22,4 +22,12 @@ export const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
       }
     />
   );
+}
+
+
+export const Logout: React.FC = () => {
+  const { auth } = useActions();
+  auth.logout();
+
+  return <Redirect to="/public" />
 }

@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 
 import { PrivateRoute } from './components/auth/auth';
-import Login from './pages/Login';
 import Unauthenticated from './pages/Unauthenticated';
 import Authenticated from './pages/Authenticated';
 import Sidebar from './components/sidebar/Sidebar';
@@ -20,18 +19,6 @@ function App() {
         <Router>
           <div>
             <Sidebar />
-
-            <Switch>
-              <Route path="/public">
-                <Unauthenticated />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <PrivateRoute path="/protected">
-                <Authenticated />
-              </PrivateRoute>
-            </Switch>
           </div>
         </Router>
       </header>

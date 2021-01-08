@@ -23,7 +23,7 @@ declare module 'overmind' {
 
 export const config = namespaced({ auth, resources });
 
-export const useState = createStateHook();
+export const useStore = createStateHook();
 export const useActions = createActionsHook();
 export const useEffects = createEffectsHook();
 export const useReaction = createReactionHook();

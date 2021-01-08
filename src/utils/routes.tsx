@@ -1,4 +1,5 @@
 import React from 'react';
+import { Logout } from '../components/auth/auth';
 import Login from "../pages/Login";
 
 export interface IRoute {
@@ -24,6 +25,11 @@ export const authenticated: IRoute[] = [
     path: "/test-b",
     sidebar: () => <div>test b</div>,
     main: () => <h2>Test B</h2>
+  },
+  {
+    path: "/logout",
+    sidebar: () => <div>logout</div>,
+    main: () => <Logout />
   }
 ];
 
