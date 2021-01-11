@@ -1,8 +1,5 @@
 export const api = {
-  getA() {
-  },
+  getA() {},
 
-  getB() {
-
-  },
-}
+  getB() {},
+};

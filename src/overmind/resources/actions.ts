@@ -1,2 +1,2 @@
-export const getA = async () => {}
-export const getB = async () => {}
+export const getA = async () => {};
+export const getB = async () => {};

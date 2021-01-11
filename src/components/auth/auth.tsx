@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, RouteProps  } from "react-router-dom";
+import { Route, Redirect, RouteProps } from 'react-router-dom';
 import { useActions, useStore } from '../../overmind';
 
 export const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
@@ -14,20 +14,19 @@ export const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
-              state: { from: location }
+              pathname: '/login',
+              state: { from: location },
             }}
           />
         )
       }
     />
   );
-}
-
+};
 
 export const Logout: React.FC = () => {
   const { auth } = useActions();
   auth.logout();
 
-  return <Redirect to="/" />
-}
+  return <Redirect to="/" />;
+};

@@ -1,27 +1,27 @@
 import React from 'react';
-import { Route, useHistory } from 'react-router-dom';
+import { Route, useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { authenticated, unauthenticated } from "../../utils/routes";
-import { PrivateRoute } from "../../components/auth/auth";
 import { Button, PaddedContainer } from 'precise-ui';
-import { useLocation } from 'react-router-dom';
+import { authenticated, unauthenticated } from '../../utils/routes';
+import { PrivateRoute } from '../../components/auth/auth';
 
 interface SidebarProps {
-  authed: boolean
+  authed: boolean;
 }
 const SidebarButton = styled(Button)<{ current?: boolean }>`
   width: 100%;
   background-color: inherit;
   color: #333;
-  border-bottom: ${props => props.current ? '1px solid grey' : ''};
+  border-bottom: ${(props) => (props.current ? '1px solid grey' : '')};
 
-  :hover, :active, :focus {
+  :hover,
+  :active,
+  :focus {
     color: #333;
     background-color: inherit;
     border-bottom: 1px solid grey;
   }
-
 `;
 
 const Sidebar: React.FC<SidebarProps> = ({ authed }) => {
@@ -32,19 +32,21 @@ const Sidebar: React.FC<SidebarProps> = ({ authed }) => {
 
   return (
     <div>
-      {routes.map(route => (
+      {routes.map((route) => (
         <PaddedContainer key={route.path} left="small" right="small">
           <SidebarButton
-            block={true}
+            block
             current={location.pathname === route.path}
-            onClick={() => { history.push(route.path) }}
+            onClick={() => {
+              history.push(route.path);
+            }}
           >
             {route.text}
           </SidebarButton>
         </PaddedContainer>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

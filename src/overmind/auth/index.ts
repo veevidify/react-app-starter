@@ -9,8 +9,8 @@ const config = {
 };
 
 export type User = {
-  username: string,
-  roles: string[],
-}
+  username: string;
+  roles: string[];
+};
 
 export default config;

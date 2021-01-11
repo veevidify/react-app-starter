@@ -1,0 +1,14 @@
+{
+  "eslint.workingDirectories": [
+    "./{PATH_TO_CLIENT}"
+  ],
+  "editor.formatOnSave": true,
+  "editor.rulers": [100],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

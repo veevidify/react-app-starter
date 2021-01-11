@@ -1,54 +1,65 @@
 import React, { useState } from 'react';
-import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { PaddedContainer, PasswordField, TextField, Button } from 'precise-ui';
 
 import { useActions, useStore } from '../overmind';
 
 type Location = {
   from: {
-    pathname: string
-  }
+    pathname: string;
+  };
 };
 
 const Login: React.FC = () => {
   let history = useHistory();
   let location = useLocation<Location>();
-  let { from } = location.state || { from: { pathname: "/" } };
+  let { from } = location.state || { from: { pathname: '/' } };
 
-  const [usernameInput, changeUsernameInput] = useState<string>("");
-  const [passwordInput, changePasswordInput] = useState<string>("");
-  const { auth: authState } = useStore()
-  const { auth: authActions } = useActions()
+  const [usernameInput, changeUsernameInput] = useState<string>('');
+  const [passwordInput, changePasswordInput] = useState<string>('');
+  const { auth: authState } = useStore();
+  const { auth: authActions } = useActions();
 
-  return (
-    !authState.user ? (
-      <div>
-        <PaddedContainer gutter="small">
-          <TextField
-            label="username"
-            value={usernameInput}
-            onChange={(e) => { changeUsernameInput(e.value) }}
-          ></TextField>
-        </PaddedContainer>
-        <PaddedContainer gutter="small">
-          <PasswordField
-            label="password"
-            value={passwordInput}
-            onChange={(e) => { changePasswordInput(e.value) }}
-          ></PasswordField>
-        </PaddedContainer>
-        <PaddedContainer gutter="small">
-          <Button onClick={() => {
+  return !authState.user ? (
+    <div>
+      <PaddedContainer gutter="small">
+        <TextField
+          label="username"
+          value={usernameInput}
+          onChange={(e) => {
+            changeUsernameInput(e.value);
+          }}
+        ></TextField>
+      </PaddedContainer>
+      <PaddedContainer gutter="small">
+        <PasswordField
+          label="password"
+          value={passwordInput}
+          onChange={(e) => {
+            changePasswordInput(e.value);
+          }}
+        ></PasswordField>
+      </PaddedContainer>
+      <PaddedContainer gutter="small">
+        <Button
+          onClick={() => {
             authActions.login({
               username: usernameInput,
               password: passwordInput,
-              callback: () => { console.log("=> login callback"); history.replace("/") }
-            })
-          }}>Log in</Button>
-        </PaddedContainer>
-      </div>
-    ) : <Redirect to="/" />
+              callback: () => {
+                console.log('=> login callback');
+                history.replace('/');
+              },
+            });
+          }}
+        >
+          Log in
+        </Button>
+      </PaddedContainer>
+    </div>
+  ) : (
+    <Redirect to="/" />
   );
-}
+};
 
 export default Login;
