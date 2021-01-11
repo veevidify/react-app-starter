@@ -6,7 +6,7 @@ import { PrivateRoute } from '../../components/auth/auth';
 interface MainProps {
   authed: boolean;
 }
-const Main: React.FC<MainProps> = ({ authed, ...children }) => {
+const Main: React.FC<MainProps> = ({ authed }) => {
   const routes = authed ? authenticated : unauthenticated;
   const RouteComponent = authed ? PrivateRoute : Route;
 
@@ -14,7 +14,7 @@ const Main: React.FC<MainProps> = ({ authed, ...children }) => {
     <Switch>
       {routes.map((route, index) => (
         <RouteComponent key={index} path={route.path} exact={route.exact}>
-          {children}
+          <route.main />
         </RouteComponent>
       ))}
     </Switch>
