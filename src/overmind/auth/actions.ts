@@ -4,11 +4,12 @@ import { initState } from './state';
 
 interface ILoginReq {
   username: string,
-  password: string
+  password: string,
+  callback?: () => void,
 }
 export const login: AsyncAction<ILoginReq> = async (
   { state, effects, actions },
-  { username, password }
+  { username, password, callback }
 ) => {
   console.log("=> overmind login")
   try {
@@ -16,7 +17,7 @@ export const login: AsyncAction<ILoginReq> = async (
     const { payload } = loginRequest;
     switch (payload.login) {
       case "success":
-        actions.auth.persistAuth({ user: payload.user, expiry: payload.expiry });
+        actions.auth.persistAuth({ user: payload.user, expiry: payload.expiry, callback: callback });
         break;
 
       case "failed":
@@ -41,11 +42,13 @@ export const logout: AsyncAction = async ({ state, effects, actions }) => {
 export const persistAuth: Action<{
   user: User,
   expiry: string,
-}> = ({ state, effects, actions }, { user, expiry }) => {
+  callback?: () => void,
+}> = ({ state, effects, actions }, { user, expiry, callback }) => {
   console.log("=> overmind authed")
   state.auth.user = user;
   state.auth.authExpiry = new Date(Date.parse(expiry));
   state.auth.token = "tok3n";
+  if (callback) callback()
 }
 
 export const deAuth: Action = ({ state, effects, actions }) => {

@@ -7,19 +7,15 @@ import {
   Route,
 } from "react-router-dom";
 
-import Sidebar from './components/sidebar/Sidebar';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Router>
-          <div>
-            <Sidebar />
-          </div>
-        </Router>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Dashboard />
+      </div>
+    </Router>
   );
 }
 

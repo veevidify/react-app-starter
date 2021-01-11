@@ -27,12 +27,13 @@ const Login: React.FC = () => {
           <button onClick={() => {
             authActions.login({
               username: usernameInput,
-              password: passwordInput
-            })}}
-          >Log in</button>
+              password: passwordInput,
+              callback: () => { console.log("=> login callback"); history.replace("/") }
+            })
+          }}>Log in</button>
         </div>
       </div>
-    ) : <Redirect to="/protected" />
+    ) : <Redirect to="/" />
   );
 }
 

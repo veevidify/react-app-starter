@@ -29,5 +29,5 @@ export const Logout: React.FC = () => {
   const { auth } = useActions();
   auth.logout();
 
-  return <Redirect to="/public" />
+  return <Redirect to="/" />
 }
