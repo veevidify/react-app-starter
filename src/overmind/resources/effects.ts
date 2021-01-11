@@ -1,5 +1,9 @@
 export const api = {
-  getA() {},
+  getA() {
+    console.log('api get A');
+  },
 
-  getB() {},
+  getB() {
+    console.log('api get B');
+  },
 };

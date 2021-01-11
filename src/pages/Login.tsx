@@ -11,9 +11,9 @@ type Location = {
 };
 
 const Login: React.FC = () => {
-  let history = useHistory();
-  let location = useLocation<Location>();
-  let { from } = location.state || { from: { pathname: '/' } };
+  const history = useHistory();
+  const location = useLocation<Location>();
+  const { from } = location.state || { from: { pathname: '/' } };
 
   const [usernameInput, changeUsernameInput] = useState<string>('');
   const [passwordInput, changePasswordInput] = useState<string>('');

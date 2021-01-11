@@ -3,5 +3,4 @@ declare global {
   type GOb = { [key: string]: any };
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {};

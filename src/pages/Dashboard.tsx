@@ -1,9 +1,11 @@
+import React from 'react';
+
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { useStore } from '../overmind';
 import { authenticated, unauthenticated } from '../utils/routes';
 import { PrivateRoute } from '../components/auth/auth';
 
-import { Grid } from 'precise-ui';
+import { Grid, PreciseTheme } from 'precise-ui';
 import Sidebar from '../components/sidebar/Sidebar';
 import Main from '../components/main/Main';
 
@@ -12,6 +14,11 @@ const Cell = (props: any) => (
     {props.children}
   </div>
 );
+
+const gridTheme: PreciseTheme = {
+  primary: '#444',
+};
+
 const Dashboard = () => {
   const { auth } = useStore();
   const authed: boolean = auth.user ? true : false;
@@ -19,7 +26,7 @@ const Dashboard = () => {
   const RouteComponent = auth.user ? PrivateRoute : Route;
 
   return (
-    <Grid rows={['100px', '1fr']} columns={['200px', '1fr']} spacing="10px">
+    <Grid rows={['100px', '1fr']} columns={['200px', '1fr']} spacing="10px" theme={gridTheme}>
       <Cell column={0} row={0} colSpan={2}>
         <p>Header</p>
       </Cell>
