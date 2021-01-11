@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { PaddedContainer, PasswordField, TextField, Button } from 'precise-ui';
+
 import { useActions, useStore } from '../overmind';
 
 type Location = {
@@ -21,17 +23,29 @@ const Login: React.FC = () => {
   return (
     !authState.user ? (
       <div>
-        <input type="text" value={usernameInput} onChange={(e) => { changeUsernameInput(e.target.value) }}></input>
-        <input type="text" value={passwordInput} onChange={(e) => { changePasswordInput(e.target.value) }}></input>
-        <div>
-          <button onClick={() => {
+        <PaddedContainer gutter="small">
+          <TextField
+            label="username"
+            value={usernameInput}
+            onChange={(e) => { changeUsernameInput(e.value) }}
+          ></TextField>
+        </PaddedContainer>
+        <PaddedContainer gutter="small">
+          <PasswordField
+            label="password"
+            value={passwordInput}
+            onChange={(e) => { changePasswordInput(e.value) }}
+          ></PasswordField>
+        </PaddedContainer>
+        <PaddedContainer gutter="small">
+          <Button onClick={() => {
             authActions.login({
               username: usernameInput,
               password: passwordInput,
               callback: () => { console.log("=> login callback"); history.replace("/") }
             })
-          }}>Log in</button>
-        </div>
+          }}>Log in</Button>
+        </PaddedContainer>
       </div>
     ) : <Redirect to="/" />
   );
