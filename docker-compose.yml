@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  react:
+    container_name: react_starter_app
+    build:
+      context: .
+      dockerfile: yarn.Dockerfile
+    volumes:
+      - ${PATH_PREFIX}:/app
+    command: ["yarn", "start"]
+    ports:
+      - ${APP_PORT}:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  yarn:
+    container_name: react_starter_yarn
+    build:
+      context: .
+      dockerfile: yarn.Dockerfile
+    volumes:
+      - ${PATH_PREFIX}:/app
+    entrypoint: ["yarn"]
