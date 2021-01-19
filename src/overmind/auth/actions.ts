@@ -1,5 +1,5 @@
 import { Action, AsyncAction, rehydrate } from 'overmind';
-import { User } from '.';
+import { CookieAuth, User } from '.';
 import { initState } from './state';
 
 interface ILoginReq {
@@ -8,7 +8,7 @@ interface ILoginReq {
   callback?: () => void;
 }
 export const login: AsyncAction<ILoginReq> = async (
-  { state, effects, actions },
+  { effects, actions },
   { username, password, callback }
 ) => {
   console.log('=> overmind login');
@@ -17,47 +17,82 @@ export const login: AsyncAction<ILoginReq> = async (
     const { payload } = loginRequest;
     switch (payload.login) {
       case 'success':
-        actions.auth.persistAuth({
-          user: payload.user,
-          expiry: payload.expiry,
-          callback: callback,
-        });
+        await actions.auth.authenticate({ user: payload.user, expiry: payload.expiry, callback });
         break;
 
       case 'failed':
-        actions.auth.deAuth();
+        await actions.auth.deauth();
         break;
     }
   } catch {
-    actions.auth.deAuth();
+    await actions.auth.deauth();
   }
 };
 
-export const logout: AsyncAction = async ({ state, effects, actions }) => {
+export const logout: AsyncAction = async ({ effects, actions }) => {
   console.log('=> overmind logout');
   try {
     const logoutRequest = await effects.auth.api.logout();
-    if (logoutRequest === true) actions.auth.deAuth();
+    if (logoutRequest === true) await actions.auth.deauth();
     else {
     }
   } catch {}
 };
 
-export const persistAuth: Action<{
+// === auth flow control === //
+
+export const authenticate: AsyncAction<{
   user: User;
   expiry: string;
   callback?: () => void;
-}> = ({ state, effects, actions }, { user, expiry, callback }) => {
-  console.log('=> overmind authed');
-  state.auth.user = user;
-  state.auth.authExpiry = new Date(Date.parse(expiry));
-  state.auth.token = 'tok3n';
+}> = async ({ actions }, { user, expiry, callback }) => {
+  const cookieAuth = {
+    user: user,
+    expiry: new Date(Date.parse(expiry)),
+  };
+  await actions.auth.persistCookieAuth(cookieAuth);
+  actions.auth.writeAuthToState({ user });
   if (callback) callback();
 };
 
-export const deAuth: Action = ({ state, effects, actions }) => {
+export const deauth: AsyncAction = async ({ actions }) => {
+  await actions.auth.clearCookieAuth();
+  actions.auth.clearAuthInState();
+};
+
+// TODO: load cookie auth into state
+export const rehydrateCookieAuth: Action = () => {
+  // read auth from cookie
+  // check expiry, if good, writeAuthToState, if expire deAuthFromState
+};
+
+// === end auth flow control === //
+
+// === auth utilities === //
+// after login writes details into cookie
+export const persistCookieAuth: AsyncAction<CookieAuth> = async ({ effects }, cookieAuth) => {
+  await effects.auth.cookieAuth.set(cookieAuth);
+};
+
+// wipe cookie auth
+export const clearCookieAuth: AsyncAction = async ({ effects }) => {
+  await effects.auth.cookieAuth.clear();
+};
+
+// write auth details into overmind state
+export const writeAuthToState: Action<{
+  user: User;
+}> = ({ state }, { user }) => {
+  console.log('=> overmind authed');
+  state.auth.user = user;
+  state.auth.token = 'tok3n';
+};
+
+// clear auth details from overmind state
+export const clearAuthInState: Action = ({ state }) => {
   console.log('=> overmind deauthed');
   state.auth.user = null;
-  state.auth.authExpiry = new Date();
   state.auth.token = '';
 };
+
+// === end auth utilities === //
