@@ -34,8 +34,6 @@ export const logout: AsyncAction = async ({ effects, actions }) => {
   try {
     const logoutRequest = await effects.auth.api.logout();
     if (logoutRequest === true) await actions.auth.deauth();
-    else {
-    }
   } catch {}
 };
 
@@ -60,10 +58,25 @@ export const deauth: AsyncAction = async ({ actions }) => {
   actions.auth.clearAuthInState();
 };
 
-// TODO: load cookie auth into state
-export const rehydrateCookieAuth: Action = () => {
+export const refreshAuthStateWithCookie: AsyncAction<void, boolean> = async ({
+  effects,
+  actions,
+}) => {
   // read auth from cookie
-  // check expiry, if good, writeAuthToState, if expire deAuthFromState
+  const cookieAuth: Nullable<CookieAuth> = await effects.auth.cookieAuth.read();
+  let setAuth = true;
+  if (cookieAuth === null) {
+    setAuth = false;
+  } else {
+    // check expiry, if good, authenticate, if expire deauth
+    const expiry = cookieAuth.expiry;
+    if (expiry <= new Date()) {
+      setAuth = false;
+    } else actions.auth.writeAuthToState({ user: cookieAuth.user });
+  }
+
+  if (!setAuth) await actions.auth.deauth();
+  return setAuth;
 };
 
 // === end auth flow control === //
