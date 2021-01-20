@@ -1,17 +1,3 @@
-const readCookieAsMap = (): GOb => {
-  const deserialisedCookie = document.cookie
-    .split(';')
-    .filter((keyValue) => keyValue !== '')
-    .map((keyValue: string) => keyValue.trim().split('='));
-
-  const cookieMap: GOb = deserialisedCookie.reduce(
-    (cookieMap, kvArr) => ({ ...cookieMap, [kvArr[0]]: kvArr[1] }),
-    {}
-  );
-
-  return cookieMap;
-};
-
 const convertMapToCookieString = (map: GOb): string => {
   const newCookie = Object.entries(map)
     .map((kvArr) => kvArr[0] + '=' + kvArr[1])
@@ -21,29 +7,40 @@ const convertMapToCookieString = (map: GOb): string => {
 };
 
 export const readCookieKey = (key: string): Nullable<string> => {
-  const cookieMap = readCookieAsMap();
+  const deserialisedCookie = document.cookie
+    .split(';')
+    .filter((keyValue) => keyValue !== '')
+    .map((keyValue: string) => keyValue.trim().split('='));
+
+  const cookieMap: GOb = deserialisedCookie.reduce(
+    (cookieMap, kvArr) => ({ ...cookieMap, [kvArr[0]]: kvArr[1] }),
+    {}
+  );
   const cookieKey = cookieMap[key] ?? null;
 
   return cookieKey;
 };
 
-export const updateCookieKey = (key: string, value: string): void & Effect<LocalStorageAction> => {
-  const cookieMap = readCookieAsMap();
-  cookieMap[key] = value;
+export const updateCookieKey = (
+  key: string,
+  value: string,
+  expires?: Date
+): void & Effect<LocalStorageAction> => {
+  const cookieMap = {
+    [key]: value,
+  };
+  expires && (cookieMap['expires'] = expires.toUTCString());
   const cookieString = convertMapToCookieString(cookieMap);
 
   document.cookie = cookieString;
 };
 
 export const clearCookieKey = (key: string): void & Effect<LocalStorageAction> => {
-  const cookieMap = readCookieAsMap();
-  console.log({ cookieMap });
-
-  cookieMap[key] = '';
-  console.log({ cookieMap });
+  const cookieMap = {
+    [key]: '',
+  };
 
   const cookieString = convertMapToCookieString(cookieMap);
-  console.log({ cookieString });
 
   document.cookie = cookieString;
 };

@@ -43,7 +43,7 @@ export const cookieAuth = {
   },
   set: async (cookieAuth: CookieAuth): Promise<void & Effect<LocalStorageAction>> => {
     console.log('=> effect write cookie');
-    updateCookieKey('auth', JSON.stringify(cookieAuth));
+    updateCookieKey('auth', JSON.stringify(cookieAuth), cookieAuth.expiry);
   },
   clear: async (): Promise<void & Effect<LocalStorageAction>> => {
     console.log('=> effect clear cookie');
