@@ -41,11 +41,11 @@ export const cookieAuth = {
       expiry: new Date(Date.parse(cookieAuthParse.expiry)),
     };
   },
-  set: async (cookieAuth: CookieAuth): Promise<void & Effect<LocalStorageAction>> => {
+  set: async (cookieAuth: CookieAuth): Promise<void> => {
     console.log('=> effect write cookie');
     updateCookieKey('auth', JSON.stringify(cookieAuth), cookieAuth.expiry);
   },
-  clear: async (): Promise<void & Effect<LocalStorageAction>> => {
+  clear: async (): Promise<void> => {
     console.log('=> effect clear cookie');
     clearCookieKey('auth');
   },
