@@ -11,7 +11,7 @@ export const login: AsyncAction<ILoginReq> = async (
   { effects, actions },
   { username, password, callback }
 ) => {
-  console.log('=> overmind login');
+  console.log('=> action login');
   try {
     const loginRequest = await effects.auth.api.login(username, password);
     const { payload } = loginRequest;
@@ -30,7 +30,7 @@ export const login: AsyncAction<ILoginReq> = async (
 };
 
 export const logout: AsyncAction = async ({ effects, actions }) => {
-  console.log('=> overmind logout');
+  console.log('=> action logout');
   try {
     const logoutRequest = await effects.auth.api.logout();
     if (logoutRequest === true) await actions.auth.deauth();
@@ -44,6 +44,7 @@ export const authenticate: AsyncAction<{
   expiry: string;
   callback?: () => void;
 }> = async ({ actions }, { user, expiry, callback }) => {
+  console.log('=> action authenticate');
   const cookieAuth = {
     user: user,
     expiry: new Date(Date.parse(expiry)),
@@ -82,13 +83,16 @@ export const refreshAuthStateWithCookie: AsyncAction<void, boolean> = async ({
 // === end auth flow control === //
 
 // === auth utilities === //
+
 // after login writes details into cookie
 export const persistCookieAuth: AsyncAction<CookieAuth> = async ({ effects }, cookieAuth) => {
+  console.log('=> action persist cookie auth');
   await effects.auth.cookieAuth.set(cookieAuth);
 };
 
 // wipe cookie auth
 export const clearCookieAuth: AsyncAction = async ({ effects }) => {
+  console.log('=> action clear cookie auth');
   await effects.auth.cookieAuth.clear();
 };
 
@@ -96,14 +100,14 @@ export const clearCookieAuth: AsyncAction = async ({ effects }) => {
 export const writeAuthToState: Action<{
   user: User;
 }> = ({ state }, { user }) => {
-  console.log('=> overmind authed');
+  console.log('=> action load auth to state');
   state.auth.user = user;
   state.auth.token = 'tok3n';
 };
 
 // clear auth details from overmind state
 export const clearAuthInState: Action = ({ state }) => {
-  console.log('=> overmind deauthed');
+  console.log('=> action clear auth from state');
   state.auth.user = null;
   state.auth.token = '';
 };

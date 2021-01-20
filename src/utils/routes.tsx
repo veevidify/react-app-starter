@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logout } from '../components/auth/auth';
+import Logout from '../components/auth/Logout';
 import Login from '../pages/Login';
 
 export interface IRoute {

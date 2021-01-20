@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { authenticated, unauthenticated } from '../../utils/routes';
-import { PrivateRoute } from '../../components/auth/auth';
+import PrivateRoute from '../auth/PrivateRoute';
 
 interface MainProps {
   authed: boolean;
