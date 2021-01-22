@@ -1,4 +1,5 @@
-import { User } from '.';
+import { CookieAuth, User } from '.';
+import { clearCookieKey, readCookieKey, updateCookieKey } from '../../utils/cookie';
 
 interface ILoginResponse {
   payload: { login: 'success'; user: User; expiry: string } | { login: 'failed'; error: any };
@@ -27,5 +28,25 @@ export const api = {
 
   logout: async () => {
     return true;
+  },
+};
+
+export const cookieAuth = {
+  read: async (): Promise<Nullable<CookieAuth>> => {
+    const cookieAuthStr = readCookieKey('auth');
+    const cookieAuthParse = cookieAuthStr ? JSON.parse(cookieAuthStr) : null;
+
+    return {
+      user: cookieAuthParse.user,
+      expiry: new Date(Date.parse(cookieAuthParse.expiry)),
+    };
+  },
+  set: async (cookieAuth: CookieAuth): Promise<void> => {
+    console.log('=> effect write cookie');
+    updateCookieKey('auth', JSON.stringify(cookieAuth), cookieAuth.expiry);
+  },
+  clear: async (): Promise<void> => {
+    console.log('=> effect clear cookie');
+    clearCookieKey('auth');
   },
 };

@@ -4,21 +4,16 @@ import { PaddedContainer, PasswordField, TextField, Button } from 'precise-ui';
 
 import { useActions, useStore } from '../overmind';
 
-type Location = {
-  from: {
-    pathname: string;
-  };
-};
-
 const Login: React.FC = () => {
   const history = useHistory();
-  const location = useLocation<Location>();
-  const { from } = location.state || { from: { pathname: '/' } };
 
   const [usernameInput, changeUsernameInput] = useState<string>('');
   const [passwordInput, changePasswordInput] = useState<string>('');
-  const { auth: authState } = useStore();
+
   const { auth: authActions } = useActions();
+  // action auth check auth
+
+  const { auth: authState } = useStore();
 
   return !authState.user ? (
     <div>

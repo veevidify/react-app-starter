@@ -6,6 +6,7 @@
     "no-use-before-define": "off",
     "import/extensions": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-empty-interface": "warn",
     "prettier/prettier": ["error"],
     "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "react/prop-types": "off",

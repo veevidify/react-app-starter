@@ -13,4 +13,9 @@ export type User = {
   roles: string[];
 };
 
+export type CookieAuth = {
+  user: User;
+  expiry: Date;
+};
+
 export default config;

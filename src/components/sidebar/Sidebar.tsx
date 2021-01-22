@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Button, PaddedContainer } from 'precise-ui';
 import { authenticated, unauthenticated } from '../../utils/routes';
-import { PrivateRoute } from '../../components/auth/auth';
+import PrivateRoute from '../auth/PrivateRoute';
 
 interface SidebarProps {
   authed: boolean;
